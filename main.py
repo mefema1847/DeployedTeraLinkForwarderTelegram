@@ -5,8 +5,9 @@ from telethon.sync import TelegramClient
 
 
 # === CONFIGURATION ===
-api_id = int(os.getenv("API_ID"))
-api_hash = os.getenv("API_HASH")
+# api_id = int(os.getenv("API_ID"))
+# api_hash = os.getenv("API_HASH")
+bot_token = os.getenv("BOT_TOKEN")
 
 source_channels = os.getenv("SOURCE_CHANNELS").split(",")
 target_channels = os.getenv("TARGET_CHANNELS").split(",")
@@ -18,7 +19,7 @@ pending_messages = {}
 pending_video_requests = {}
 
 # Create the Telegram client
-client = TelegramClient("multi_forward_session_cloud", api_id, api_hash)
+client = TelegramClient("bot_session", api_id, api_hash).start(bot_token=bot_token)
 
 # with TelegramClient('find_my_chats', api_id, api_hash) as client:
 #     for dialog in client.iter_dialogs():
@@ -119,5 +120,4 @@ async def handle_video_bot_reply(event):
 
 # Start the bot
 print("👂 Listening for source messages and bot replies...")
-with client:
-    client.run_until_disconnected() 
+client.run_until_disconnected() 
